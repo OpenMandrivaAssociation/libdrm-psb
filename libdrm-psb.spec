@@ -4,7 +4,7 @@
 %define staticdevelname %mklibname drm -d -s
 
 Summary:	Userspace interface to kernel DRM services
-Name:		libdrm
+Name:		libdrm-psb
 Version:	2.3.0
 Release:	%mkrel 8
 Group:		Development/X11
