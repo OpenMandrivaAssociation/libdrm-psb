@@ -13,6 +13,16 @@ URL:		http://xorg.freedesktop.org
 Source0:	http://dri.freedesktop.org/libdrm/libdrm-%{version}.tar.bz2
 # (fc) do not change permission if not requested
 Patch0:		libdrm-2.3.0-perm.patch
+# ttm support (from debian/patches in http://moblin.org/repos/projects/libdrm.git)
+Patch1: 00_poulsbo_libdrm_update.patch
+Patch2: 01_poulsbo_libdrm_update.patch
+Patch3: 02_poulsbo_libdrm_update.patch
+Patch4: 03_poulsbo_libdrm_update.patch
+Patch5: 04_poulsbo_libdrm_update.patch
+Patch6: 05_poulsbo_libdrm_update.patch
+Patch7: 06_poulsbo_libdrm_update.patch
+Patch8: 07_poulsbo_libdrm_update.patch
+Patch9: 08_poulsbo_libdrm_update.patch
 BuildRequires: x11-util-macros >= 1.0.1
 BuildRoot:	%{_tmppath}/%{name}-root
 
@@ -53,6 +63,15 @@ Static development files for %{name}
 
 %setup -q -n libdrm-%{version}
 %patch0 -p1 -b .perm
+%patch1 -p1 -b .drm
+%patch2 -p1 -b .drm
+%patch3 -p1 -b .drm
+%patch4 -p1 -b .drm
+%patch5 -p1 -b .drm
+%patch6 -p1 -b .drm
+%patch7 -p1 -b .drm
+%patch8 -p1 -b .drm
+%patch9 -p1 -b .drm
 
 %build
 %configure2_5x \
