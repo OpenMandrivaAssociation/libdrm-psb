@@ -74,6 +74,7 @@ Static development files for %{name}
 %patch7 -p1 -b .drm
 %patch8 -p1 -b .drm
 %patch9 -p1 -b .drm
+autoreconf
 
 %build
 %configure2_5x \
