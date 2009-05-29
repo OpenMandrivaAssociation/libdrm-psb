@@ -1,7 +1,9 @@
 %define major 2
-%define libname %mklibname drm %{major}
-%define develname %mklibname drm -d
-%define staticdevelname %mklibname drm -d -s
+%define libname %mklibname drm-psb %{major}
+%define develname %mklibname drm-psb -d
+%define staticdevelname %mklibname drm-psb -d -s
+
+%define priority 500
 
 Summary:	Userspace interface to kernel DRM services
 Name:		libdrm-psb
@@ -86,30 +88,57 @@ rm -rf %{buildroot}
 
 %makeinstall_std 
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
+# move to custom libdrm-psb subdirs
+mkdir -p %{buildroot}%{_libdir}/%{name}
+mv %{buildroot}%{_libdir}/*.{so*,la,a} %{buildroot}%{_libdir}/%{name}
 
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
+mkdir -p %{buildroot}%{_includedir}/%{name}
+mv %{buildroot}%{_includedir}/drm %{buildroot}%{_includedir}/*.h %{buildroot}%{_includedir}/%{name}
+
+mv %{buildroot}%{_libdir}/pkgconfig/libdrm.pc %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+
+# prefer libdrm-psb to standard libdrm, and abuse GL alternatives to do that
+mkdir -p %{buildroot}%{_sysconfdir}/ld.so.conf.d/GL
+cat > %{buildroot}%{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf <<EOF
+%{_libdir}/%{name}
+EOF
+
+%post -n %{libname}
+# FIXME: handle 2009.1 extra_modules
+%{_sbindir}/update-alternatives --install \
+	%{_sysconfdir}/ld.so.conf.d/GL.conf gl_conf %{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf %{priority} \
+%if %{mdkversion} >= 200900
+	--slave %{_libdir}/xorg/modules/extensions/libdri.so libdri.so %{_libdir}/xorg/modules/extensions/standard/libdri.so \
 %endif
+%if %{mdkversion} >= 200800
+	--slave %{_libdir}/xorg/modules/extensions/libglx.so libglx %{_libdir}/xorg/modules/extensions/standard/libglx.so
+%endif
+# Call /sbin/ldconfig explicitely due to alternatives
+/sbin/ldconfig
+
+%postun -n %{libname}
+%{_sbindir}/update-alternatives --remove gl_conf %{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf
+# Call /sbin/ldconfig explicitely due to alternatives
+/sbin/ldconfig
 
 %clean
 rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/%{name}/*.so.*
+%{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf
 
 %files -n %{develname}
 %defattr(-,root,root)
-%dir %{_includedir}/drm
-%{_includedir}/drm/*.h
-%{_includedir}/*.h
-%{_libdir}/*.la
-%{_libdir}/*.so
+%dir %{_includedir}/%{name}/drm
+%{_includedir}/%{name}/drm/*.h
+%{_includedir}/%{name}/*.h
+%{_libdir}/%{name}/*.la
+%{_libdir}/%{name}/*.so
 %{_libdir}/pkgconfig/*.pc
 
 %files -n %{staticdevelname}
 %defattr(-,root,root)
-%{_libdir}/*.a
+%dir %{_libdir}/%{name}
+%{_libdir}/%{name}/*.a
