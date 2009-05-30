@@ -5,6 +5,8 @@
 
 %define priority 500
 
+%define _enable_libtoolize 1
+
 Summary:	Userspace interface to kernel DRM services
 Name:		libdrm-psb
 Version:	2.3.0
