@@ -8,11 +8,11 @@
 Summary:	Userspace interface to kernel DRM services
 Name:		libdrm-psb
 Version:	2.3.0
-Release:	%mkrel 8
+Release:	%mkrel 23
 Group:		Development/X11
 License:	MIT/X11
 URL:		http://xorg.freedesktop.org
-Source0:	http://dri.freedesktop.org/libdrm/libdrm-%{version}.tar.bz2
+Source0:	libdrm_%{version}-23.tar.gz
 # ttm support (from debian/patches in http://moblin.org/repos/projects/libdrm.git)
 Patch1: 00_poulsbo_libdrm_update.patch
 Patch2: 01_poulsbo_libdrm_update.patch
@@ -64,16 +64,16 @@ Static development files for %{name}
 
 %prep
 
-%setup -q -n libdrm-%{version}
-%patch1 -p1 -b .drm
-%patch2 -p1 -b .drm
-%patch3 -p1 -b .drm
-%patch4 -p1 -b .drm
-%patch5 -p1 -b .drm
-%patch6 -p1 -b .drm
-%patch7 -p1 -b .drm
-%patch8 -p1 -b .drm
-%patch9 -p1 -b .drm
+%setup -q -n libdrm
+#%patch1 -p1 -b .drm
+#%patch2 -p1 -b .drm
+#%patch3 -p1 -b .drm
+#%patch4 -p1 -b .drm
+#%patch5 -p1 -b .drm
+#%patch6 -p1 -b .drm
+#%patch7 -p1 -b .drm
+#%patch8 -p1 -b .drm
+#%patch9 -p1 -b .drm
 %patch0 -p1 -b .perm
 autoreconf
 
