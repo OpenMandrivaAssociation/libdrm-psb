@@ -102,7 +102,9 @@ EOF
 /sbin/ldconfig
 
 %postun -n %{libname}
-%{_sbindir}/update-alternatives --remove gl_conf %{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf
+if [ ! -f %{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf ]; then
+   %{_sbindir}/update-alternatives --remove gl_conf %{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf
+fi
 # Call /sbin/ldconfig explicitely due to alternatives
 /sbin/ldconfig
 
