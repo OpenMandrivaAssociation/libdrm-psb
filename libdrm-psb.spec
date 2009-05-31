@@ -15,16 +15,6 @@ Group:		Development/X11
 License:	MIT/X11
 URL:		http://xorg.freedesktop.org
 Source0:	libdrm_%{version}-23.tar.gz
-# ttm support (from debian/patches in http://moblin.org/repos/projects/libdrm.git)
-Patch1: 00_poulsbo_libdrm_update.patch
-Patch2: 01_poulsbo_libdrm_update.patch
-Patch3: 02_poulsbo_libdrm_update.patch
-Patch4: 03_poulsbo_libdrm_update.patch
-Patch5: 04_poulsbo_libdrm_update.patch
-Patch6: 05_poulsbo_libdrm_update.patch
-Patch7: 06_poulsbo_libdrm_update.patch
-Patch8: 07_poulsbo_libdrm_update.patch
-Patch9: 08_poulsbo_libdrm_update.patch
 # (fc) do not change permission if not requested
 # (blino) rediff for ttm/psb branch
 Patch0:		libdrm-psb-2.3.0-perm.patch
@@ -67,15 +57,6 @@ Static development files for %{name}
 %prep
 
 %setup -q -n libdrm
-#%patch1 -p1 -b .drm
-#%patch2 -p1 -b .drm
-#%patch3 -p1 -b .drm
-#%patch4 -p1 -b .drm
-#%patch5 -p1 -b .drm
-#%patch6 -p1 -b .drm
-#%patch7 -p1 -b .drm
-#%patch8 -p1 -b .drm
-#%patch9 -p1 -b .drm
 %patch0 -p1 -b .perm
 autoreconf
 
