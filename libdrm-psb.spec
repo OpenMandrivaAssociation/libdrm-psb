@@ -3,6 +3,8 @@
 %define develname %mklibname drm-psb -d
 %define staticdevelname %mklibname drm-psb -d -s
 
+%define extra_module_dir        %{_libdir}/xorg/extra-modules
+%define xorg1_6_extra_modules	%{_libdir}/xorg/xorg-1.6-extra-modules
 %define priority 500
 
 %define _enable_libtoolize 1
@@ -89,14 +91,17 @@ cat > %{buildroot}%{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf <<EOF
 EOF
 
 %post -n %{libname}
-# FIXME: handle 2009.1 extra_modules
 %{_sbindir}/update-alternatives --install \
 	%{_sysconfdir}/ld.so.conf.d/GL.conf gl_conf %{_sysconfdir}/ld.so.conf.d/GL/%{name}.conf %{priority} \
+%if %{mdkversion} >= 200910
+	--slave %{extra_module_dir} xorg_extra_modules %{xorg1_6_extra_modules}
+%else
 %if %{mdkversion} >= 200900
 	--slave %{_libdir}/xorg/modules/extensions/libdri.so libdri.so %{_libdir}/xorg/modules/extensions/standard/libdri.so \
 %endif
 %if %{mdkversion} >= 200800
 	--slave %{_libdir}/xorg/modules/extensions/libglx.so libglx %{_libdir}/xorg/modules/extensions/standard/libglx.so
+%endif
 %endif
 # Call /sbin/ldconfig explicitely due to alternatives
 /sbin/ldconfig
