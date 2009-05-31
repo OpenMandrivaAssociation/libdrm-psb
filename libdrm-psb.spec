@@ -1,4 +1,4 @@
-%define rel 1
+%define rel 2
 %define release %mkrel 23.%{rel}
 %define major 2
 %define libname %mklibname drm-psb %{major}
@@ -23,6 +23,7 @@ Source0:	libdrm_%{version}-23.tar.gz
 # (blino) rediff for ttm/psb branch
 Patch0:		libdrm-psb-2.3.0-perm.patch
 BuildRequires: x11-util-macros >= 1.0.1
+BuildRequires: dkms-psb
 BuildRoot:	%{_tmppath}/%{name}-root
 
 %description
@@ -92,6 +93,9 @@ mkdir -p %{buildroot}%{_includedir}/%{name}
 mv %{buildroot}%{_includedir}/drm %{buildroot}%{_includedir}/*.h %{buildroot}%{_includedir}/%{name}
 
 mv %{buildroot}%{_libdir}/pkgconfig/libdrm.pc %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+
+# install some headers from the kernel part, required to build the xorg driver
+cp /usr/src/psb-*/psb_{drm,reg}.h %{buildroot}%{_includedir}/%{name}/drm/
 
 # prefer libdrm-psb to standard libdrm, and abuse GL alternatives to do that
 mkdir -p %{buildroot}%{_sysconfdir}/ld.so.conf.d/GL
