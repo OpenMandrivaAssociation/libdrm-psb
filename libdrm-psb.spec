@@ -1,3 +1,5 @@
+%define rel 1
+%define release %mkrel 23.%{rel}
 %define major 2
 %define libname %mklibname drm-psb %{major}
 %define develname %mklibname drm-psb -d
@@ -12,7 +14,7 @@
 Summary:	Userspace interface to kernel DRM services
 Name:		libdrm-psb
 Version:	2.3.0
-Release:	%mkrel 23
+Release:	%{release}
 Group:		Development/X11
 License:	MIT/X11
 URL:		http://xorg.freedesktop.org
@@ -30,6 +32,13 @@ Userspace interface to kernel DRM services
 Summary:	Userspace interface to kernel DRM services
 Group:		Development/X11
 Provides:	%{name} = %{version}
+%if %{mdkversion} >= 200900
+# libdri.so
+Conflicts:	x11-server-common < 1.4.2-5
+%endif
+%if %{mdkversion} >= 200910
+Conflicts: x11-server-common < 1.6.0-11
+%endif
 
 %description -n	%{libname}
 Userspace interface to kernel DRM services
