@@ -1,4 +1,4 @@
-%define rel 2
+%define rel 3
 %define release %mkrel 23.%{rel}
 %define major 2
 %define libname %mklibname drm-psb %{major}
@@ -40,6 +40,8 @@ Conflicts:	x11-server-common < 1.4.2-5
 %if %{mdkversion} >= 200910
 Conflicts: x11-server-common < 1.6.0-11
 %endif
+Requires(post): update-alternatives >= 1.9.0
+Requires(postun): update-alternatives >= 1.9.0
 
 %description -n	%{libname}
 Userspace interface to kernel DRM services
