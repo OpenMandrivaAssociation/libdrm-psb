@@ -1,4 +1,4 @@
-%define rel 3
+%define rel 4
 %define release %mkrel 23.%{rel}
 %define major 2
 %define libname %mklibname drm-psb %{major}
@@ -95,6 +95,11 @@ mkdir -p %{buildroot}%{_includedir}/%{name}
 mv %{buildroot}%{_includedir}/drm %{buildroot}%{_includedir}/*.h %{buildroot}%{_includedir}/%{name}
 
 mv %{buildroot}%{_libdir}/pkgconfig/libdrm.pc %{buildroot}%{_libdir}/pkgconfig/%{name}.pc
+
+# fix libdir in pkgconfig and la files
+perl -pi -e 's,%{_libdir},%{_libdir}/%{name},' \
+  %{buildroot}%{_libdir}/pkgconfig/%{name}.pc \
+  %{buildroot}%{_libdir}/%{name}/libdrm.la
 
 # install some headers from the kernel part, required to build the xorg driver
 cp /usr/src/psb-*/psb_{drm,reg}.h %{buildroot}%{_includedir}/%{name}/drm/
