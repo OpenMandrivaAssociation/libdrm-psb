@@ -1,4 +1,4 @@
-%define rel 4
+%define rel 5
 %define release %mkrel 23.%{rel}
 %define major 2
 %define libname %mklibname drm-psb %{major}
