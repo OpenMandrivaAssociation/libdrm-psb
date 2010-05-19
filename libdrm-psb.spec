@@ -10,6 +10,7 @@
 %define priority 500
 
 %define _enable_libtoolize 1
+%define _provides_exceptions libdrm.so.2
 
 Summary:	Userspace interface to kernel DRM services
 Name:		libdrm-psb
