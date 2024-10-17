@@ -18,7 +18,7 @@ Version:	2.3.0
 Release:	%{release}
 Group:		Development/X11
 License:	MIT/X11
-URL:		http://xorg.freedesktop.org
+URL:		https://xorg.freedesktop.org
 Source0:	libdrm_%{version}-23.tar.gz
 # (fc) do not change permission if not requested
 # (blino) rediff for ttm/psb branch
