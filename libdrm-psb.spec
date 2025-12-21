@@ -23,6 +23,11 @@ Source0:	libdrm_%{version}-23.tar.gz
 # (fc) do not change permission if not requested
 # (blino) rediff for ttm/psb branch
 Patch0:		libdrm-psb-2.3.0-perm.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires: x11-util-macros >= 1.0.1
 BuildRequires: dkms-psb
 BuildRoot:	%{_tmppath}/%{name}-root
