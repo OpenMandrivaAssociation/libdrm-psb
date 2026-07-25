@@ -1,5 +1,5 @@
 %define rel 6
-%define release %mkrel 23.%{rel}
+%define release 23.%{rel}.1
 %define major 2
 %define libname %mklibname drm-psb %{major}
 %define develname %mklibname drm-psb -d
